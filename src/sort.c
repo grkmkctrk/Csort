@@ -1,6 +1,28 @@
 #include "../inc/sort.h"
 
 // Begin of Tools
+int max(int* arr, int size){
+    int max = arr[0];
+    for(int i = 1; i < size; i++){
+        if(arr[i] > max){
+            max = arr[i];
+        }
+    }
+    // printf("%d\n", max);
+    return max;
+}
+
+int min(int* arr, int size){
+    int min = arr[0];
+    for(int i = 1; i < size; i++){
+        if(arr[i] < min){
+            min = arr[i];
+        }
+    }
+    // printf("%d\n", min);
+    return min;
+}
+
 void swap(int *a, int *b){
     int temp = *a;
     *a = *b;
@@ -230,17 +252,17 @@ void quick_sort(int *array, int left, int right){
         quick_sort(array, 0, size - 1) creates
         a subarray of array[0] to array[size - 1]
 
-        assume that left side of array is {3, 8, 2}
-        - quick_sort(array, 0, 2) array will be {3, 8, 2} -> {2, 3, 8}
-        - quick_sort(array, 0, 1) array will be {2, 3} -> {2, 3}
-        - quick_sort(array, 0, 1) array will be {2} -> {2}
-        - quick_sort(array, 0, 0) array will be {}
-        final form of left side is {2, 3, 8}
-        and then it returns.
-        assume that right side of array is {7, 1, 9}
-        left will be 3 because it is pivote index
-        - quick_sort(array, 3, 3) will be {7, 1, 9} -> {}
+        assume that left side of array is {7, 1, 9, 3, 8, 2}
 
+        In pivot:
+        - most right element of array will be selected as pivot
+        - pivot will be placed in the correct position in the array
+        (7 <= 2) {7, 1, 9, 3, 8, 2} i=-1 j = 0
+        (1 <= 2) {1, 7, 9, 3, 8, 2} i=0  j = 1
+        (9 <= 2) {1, 7, 9, 3, 8, 2} i=0  j = 2
+        (3 <= 2) {1, 7, 9, 3, 8, 2} i=0  j = 3
+        (8 <= 2) {1, 7, 9, 3, 8, 2} i=0  j = 4
+        out of loop: {1, 2, 9, 3, 8, 7}
     */
     
     if(left < right){
@@ -249,3 +271,155 @@ void quick_sort(int *array, int left, int right){
         quick_sort(array, pivot + 1, right);
     }
 }
+
+void quick_sort_iterative(int *array, int left, int right){
+    // push left and right to stack
+    // pop left and right from stack
+    // if left < right
+        // push left and right to stack
+        // pivot = partition(array, left, right)
+        // push pivot - 1 and pivot + 1 to stack
+    
+    int stack[right - left + 1];
+    int top = -1;
+    stack[++top] = left;  // 0
+    stack[++top] = right; // 1
+
+    while(top >= 0){
+        right = stack[top--]; // 0
+        left = stack[top--];  //-1
+        if(left < right){
+            int pivot = partition(array, left, right);
+            
+            if(pivot - 1 > left){
+                stack[++top] = left;
+                stack[++top] = pivot - 1;
+            }
+            if(pivot + 1 < right){
+                stack[++top] = pivot + 1;
+                stack[++top] = right;
+            }
+        }
+    }
+}
+
+    // heap_sort
+void heapify(int *array, int size, int i){
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    if(left < size && array[left] > array[largest]){
+        largest = left;
+    }
+    if(right < size && array[right] > array[largest]){
+        largest = right;
+    }
+    if(largest != i){
+        swap(&array[i], &array[largest]);
+        heapify(array, size, largest);
+    }
+}
+
+void heap_sort(int *array, int size){
+    int i;
+    for(i = size / 2 - 1; i >= 0; i--){
+        heapify(array, size, i);
+    }
+    for(i = size - 1; i >= 0; i--){
+        swap(&array[0], &array[i]);
+        heapify(array, i, 0);
+    }
+}
+
+    // counting_sort
+void counting_sort(int *array, int size){
+
+    int i;
+    int max = array[0];
+    int min = array[0];
+    for(i = 1; i < size; i++){
+        if(array[i] > max){
+            max = array[i];
+        }
+        if(array[i] < min){
+            min = array[i];
+        }
+    }
+    int k = max - min + 1;
+    int count[k];
+    int output[size];
+    for(i = 0; i < k; i++){
+        count[i] = 0;
+    }
+    for(i = 0; i < size; i++){
+        count[array[i] - min]++;
+    }
+    for(i = 1; i < k; i++){
+        count[i] += count[i - 1];
+    }
+    for(i = size - 1; i >= 0; i--){
+        output[count[array[i] - min] - 1] = array[i];
+        count[array[i] - min]--;
+    }
+    for(i = 0; i < size; i++){
+        array[i] = output[i];
+    }
+}
+
+void counting_sort2(int *array, int size, int k){
+
+    int i;
+    int count[k + 1];
+    int output[size];
+    for(i = 0; i <= k; i++){
+        count[i] = 0;
+    }
+    for(i = 0; i < size; i++){
+        count[array[i]]++;
+    }
+    for(i = 1; i <= k; i++){
+        count[i] += count[i - 1];
+    }
+    for(i = size - 1; i >= 0; i--){
+        output[count[array[i]] - 1] = array[i];
+        count[array[i]]--;
+    }
+    for(i = 0; i < size; i++){
+        array[i] = output[i];
+    }
+}
+
+    // radix_sort
+void radix_sort(int *array, int size){
+    int i;
+    int max = array[0];
+    int min = array[0];
+    for(i = 1; i < size; i++){
+        if(array[i] > max){
+            max = array[i];
+        }
+        if(array[i] < min){
+            min = array[i];
+        }
+    }
+    int k = max - min + 1;
+    int count[k];
+    int output[size];
+    for(i = 0; i < k; i++){
+        count[i] = 0;
+    }
+    for(i = 0; i < size; i++){
+        count[array[i] - min]++;
+    }
+    for(i = 1; i < k; i++){
+        count[i] += count[i - 1];
+    }
+    for(i = size - 1; i >= 0; i--){
+        output[count[array[i] - min] - 1] = array[i];
+        count[array[i] - min]--;
+    }
+    for(i = 0; i < size; i++){
+        array[i] = output[i];
+    }
+}
+

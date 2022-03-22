@@ -5,12 +5,10 @@
 # This file is part of GNU CC.
 
 TARGET	:= sort
-OBJ 	:= main.o sort.o
+OBJ 	:= main.o sort.o ll.o
 
 CC	:= gcc
 CFLAGS 	:= -Wall -Werror
-
-DEPFLAG := -MMD -MF ../build/$(TARGET).d
 
 
 all: clean $(TARGET) run
@@ -23,9 +21,9 @@ sort: $(OBJ)
 	@echo "Build complete"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o ../build/$@ $(DEPFLAG)
+	@$(CC) $(CFLAGS) -c $< -o ../build/$@
 
 clean:
-	@rm -f ../build/*.o ../build/*.d ../build/$(TARGET) 
+	@rm -f ../build/*.o  ../build/$(TARGET) 
 
 
