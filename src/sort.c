@@ -467,3 +467,72 @@ void bucket_sort(int *arr, int size, int numOfBuckets){
         }
     }
 }
+
+    // shell_sort
+void shell_sort(int* arr, int size){
+    int gap = size-1;
+    while(gap > 1){
+        gap = gap / 2;
+
+        for(int i = 0; i < gap; i++)
+            for(int j = i + gap; j < size; j += gap)
+                if(arr[j] < arr[j - gap])
+                    swap(&arr[j], &arr[j - gap]);
+    
+    }
+}
+
+    // comb_sort
+void comb_sort(int* arr, int size){
+    // comb sort ascending order
+    // a kind of improvement of bubble sort
+
+    int gap = size;
+    bool swapped = true;
+    while(gap > 1 || swapped){
+        if(gap > 1){
+            gap = (int)(gap / 1.3);
+        }
+        swapped = false;
+        for(int i = 0; i + gap < size; i++){
+            if(arr[i] > arr[i + gap]){
+                int temp = arr[i];
+                arr[i] = arr[i + gap];
+                arr[i + gap] = temp;
+                swapped = true;
+            }
+        }
+    }
+}
+
+    // pigeonhole_sort
+void pigeonhole_sort(int* arr, int size){
+    int max_num = max(arr, size);
+    int min_num = min(arr, size);
+
+    /*
+        Note: this algorithm is suitable datas that have close values
+        because the range will be set depend od difference between max and min.
+        if you use this algorithm for datas that have far apart values, it won't be memory efficient.
+    */
+
+    int range = max_num - min_num + 1;
+
+    ll_node_t* hole[range];
+
+    for(int i = 0; i < range; i++)
+        hole[i] = NULL;
+    
+    for(int i = 0; i < size; i++)
+        ll_insert_tail(&hole[arr[i] - min_num], arr[i]);
+    
+    // get them back
+    int index = 0;
+    for(int i = 0; i < range; i++){
+        ll_node_t* current = hole[i];
+        while(current != NULL){
+            arr[index++] = current->data;
+            current = current->next;
+        }
+    }
+}

@@ -27,8 +27,13 @@ int main(){
 
     // radix_sort(array, 10);
 
+    // bucket_sort(arr, 10, 10);
 
-    bucket_sort(arr, 10, 10);
+    // shell_sort(arr, 10);
+
+    // comb_sort(arr, 10);
+
+    pigeonhole_sort(arr, 10);
 
     print_array(arr, 10);
 

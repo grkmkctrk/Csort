@@ -21,34 +21,43 @@ void heapify(int *array, int size, int i);
 // Selection Sort - Time Complexity: O(n²)
 void selection_sort(int *array, int size);
 
-// Bubble Sort - Time Complexity: O(n²)
+// Bubble Sort 
 void bubble_sort_1(int *array, int size);
 void bubble_sort_2(int *array, int size);
 void bubble_sort_recursive(int *array, int size);
 
-// Insertion Sort - Time Complexity: O(n²)
+// Insertion Sort 
 void insertion_sort(int *array, int size);
 void insertion_sort_recursive(int *array, int size);
 
-// Merge Sort - Time Complexity: O(n log n)
+// Merge Sort 
 void merge_sort(int *array, int size);
 void merge_sort_iterative(int *array, int size);
 
-// Quick Sort - Time Complexity: O(n log n)
+// Quick Sort 
 void quick_sort(int *array, int left, int right);
 void quick_sort_iterative(int *array, int left, int right);
 
-// Heap Sort - Time Complexity: O(n log n)
+// Heap Sort 
 void heap_sort(int *array, int size);
 
-// Counting Sort - Time Complexity: O(n)
+// Counting Sort 
 void counting_sort(int *array, int size);
 void counting_sort2(int *array, int size, int k);
 
-// Radix Sort - Time Complexity: O(nk)
+// Radix Sort 
 void radix_sort(int *array, int size);
 
-// Bucket Sort - Time Complexity: O(n)
+// Bucket Sort 
 void bucket_sort(int *arr, int size, int numOfBuckets);
+
+// Shell Sort 
+void shell_sort(int *array, int size);
+
+// Comb Sort
+void comb_sort(int *array, int size);
+
+// Pigeonhole Sort
+void pigeonhole_sort(int *array, int size);
 
 #endif
