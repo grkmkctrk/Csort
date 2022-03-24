@@ -423,3 +423,47 @@ void radix_sort(int *array, int size){
     }
 }
 
+    // bucket_sort
+void bucket_sort(int *arr, int size, int numOfBuckets){
+
+    int max_value = max(arr, size);
+    int min_value = min(arr, size);
+
+    int range = ((max_value - min_value) / numOfBuckets)+1;    
+
+    // linked list and allocate memory
+
+    ll_node_t* buckets[numOfBuckets];
+
+    for(int i = 0; i < numOfBuckets; i++){
+        buckets[i] = NULL;
+    }
+
+
+    for(int i = 0; i < size; i++){
+        float bucket_index =  (((float) arr[i] - min_value) / range) - (arr[i] - min_value) / range; 
+        
+        if(bucket_index == 0 && arr[i] != min_value){
+            ll_insert_tail(&buckets[(int) ((arr[i] - min_value) / range) - 1], arr[i]);
+        }else{
+            ll_insert_tail(&buckets[(int) ((arr[i] - min_value) / range)], arr[i]);
+        }
+    }
+
+    for(int i = 0; i < numOfBuckets; i++){
+        if(ll_size(buckets[i]) != 0){
+            ll_sort(&buckets[i]);
+        }
+    }
+
+    // gather them back
+    int index = 0;
+    for(int i = 0; i < numOfBuckets; i++){
+        ll_node_t* current = buckets[i];
+        while(current != NULL){
+            arr[index] = current->data;
+            current = current->next;
+            index++;
+        }
+    }
+}

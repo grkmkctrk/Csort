@@ -2,7 +2,7 @@
 
 int main(){
 
-    int array[10] = {45, 21, 54, 77, 24, 86, 12, 56, 89, 34};
+    int arr[10] = {45, 21, 54, 77, 24, 86, 12, 56, 89, 34};
     // int array1[6] = {7, 1, 9, 3, 8, 2};
 
     // selection_sort(array, 10);
@@ -27,11 +27,10 @@ int main(){
 
     // radix_sort(array, 10);
 
-    bucket_sort(array, 10);
 
-    print_array(array, 10);
-    
+    bucket_sort(arr, 10, 10);
 
+    print_array(arr, 10);
 
 
 

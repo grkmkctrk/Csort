@@ -49,22 +49,19 @@ void ll_insert_tail(ll_node_t** head, int data){
 void ll_sort(ll_node_t** head){
     ll_node_t* current = *head;
     ll_node_t* previous = NULL;
-    ll_node_t* next = NULL;
     while(current != NULL){
-        next = current->next;
-        while(next != NULL && next->data < current->data){
-            previous = next;
-            next = next->next;
-        }
-        if(next == current){
-            current = current->next;
-        }else{
+        ll_node_t* next = current->next;
+        if(next != NULL && current->data > next->data){
             if(previous == NULL){
                 *head = next;
             }else{
                 previous->next = next;
             }
-            current->next = next;
+            current->next = next->next;
+            next->next = current;
+            current = *head;
+            previous = NULL;
+        }else{
             previous = current;
             current = next;
         }

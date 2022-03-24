@@ -49,6 +49,6 @@ void counting_sort2(int *array, int size, int k);
 void radix_sort(int *array, int size);
 
 // Bucket Sort - Time Complexity: O(n)
-void bucket_sort(int *array, int size);
+void bucket_sort(int *arr, int size, int numOfBuckets);
 
 #endif
