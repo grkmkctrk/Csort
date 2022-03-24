@@ -33,9 +33,11 @@ int main(){
 
     // comb_sort(arr, 10);
 
-    pigeonhole_sort(arr, 10);
+    // pigeonhole_sort(arr, 10);
 
-    print_array(arr, 10);
+    // cycle_sort(arr, 10);
+
+    // print_array(arr, 10);
 
 
 

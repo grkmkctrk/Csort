@@ -60,4 +60,12 @@ void comb_sort(int *array, int size);
 // Pigeonhole Sort
 void pigeonhole_sort(int *array, int size);
 
+// Cycle Sort
+void cycle_sort(int *array, int size);
+
+// ===========================
+
+    // K nearest neighbors
+int* find_k_closest(int* arr, int size, int k, int target);
+
 #endif

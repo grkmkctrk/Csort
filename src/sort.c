@@ -536,3 +536,97 @@ void pigeonhole_sort(int* arr, int size){
         }
     }
 }
+
+    // Cycle sort
+void cycle_sort(int* arr, int size){
+
+    for (int cs = 0; cs <= size - 2; cs++) {
+
+        int item = arr[cs];
+        int pos = cs;
+        for (int i = cs + 1; i < size; i++)
+            if (arr[i] < item) pos++;
+ 
+        if (pos == cs) continue;
+ 
+        while (item == arr[pos]) pos += 1;
+ 
+        if (pos != cs) swap(&item, &arr[pos]);
+ 
+        while (pos != cs){
+            pos = cs;
+ 
+            for (int i = cs + 1; i < size; i++)
+                if (arr[i] < item)
+                    pos += 1;
+ 
+            while (item == arr[pos])
+                pos += 1;
+ 
+            if (item != arr[pos]) {
+                swap(&item, &arr[pos]);
+            }
+        }
+    }
+}
+
+
+int* find_k_closest(int* arr, int size, int k, int target){
+    int* output = (int*) malloc(sizeof(int) * k);
+    int i = 0;
+    int j = size - 1;
+    int mid = 0;
+    while(i < j){
+        mid = (i + j) / 2;
+        if(arr[mid] < target){
+            i = mid + 1;
+        }else{
+            j = mid;
+        }
+    }
+    int start = i;
+    i = 0;
+    j = size - 1;
+    while(i < j){
+        mid = (i + j) / 2;
+        if(arr[mid] > target){
+            j = mid - 1;
+        }else{
+            i = mid + 1;
+        }
+    }
+    int end = j;
+    int index = 0;
+    while(index < k){
+        if(start == end){
+            output[index++] = arr[start];
+            break;
+        }
+        if(abs(arr[start] - target) < abs(arr[end] - target)){
+            output[index++] = arr[start++];
+        }else{
+            output[index++] = arr[end--];
+        }
+    }
+
+    return output;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
